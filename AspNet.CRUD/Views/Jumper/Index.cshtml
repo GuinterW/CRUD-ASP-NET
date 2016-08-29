@@ -1,1 +1,110 @@
-﻿<h2>Controle de Jumpers</h2>
+﻿@model AspNet.CRUD.Jumpers[]
+
+@{ ViewBag.Title = "Página Inicial"; }
+<body>
+	<!-- Modal -->
+	<div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="modalLabel">Excluir Item</h4>
+				</div>
+				<div class="modal-body">
+					Deseja realmente excluir este item?
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary">Sim</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">N&atilde;o</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="main" class="container-fluid">
+		<br><br><br><br>
+		<div id="top" class="row">
+			<div class="col-md-3">
+				<h2>Itens</h2>
+			</div>
+
+			<div class="col-md-6">
+				<div class="input-group h2">
+					<input name="data[search]" class="form-control" id="search" type="text" placeholder="Pesquisar Itens">
+					<span class="input-group-btn">
+						<button class="btn btn-primary" type="submit">
+							<span class="glyphicon glyphicon-search"></span>
+						</button>
+					</span>	
+				</div>
+			</div>
+			
+			<div class="col-md-3">
+	            <a href="/ControleJumpers/Adicionar" class="btn btn-primary pull-right h2">Novo Item</a>
+			</div>
+		</div>
+
+		<hr />
+		<div id="list" class="row">
+			
+			<div class="table-respoonsive col-md-12">
+				<table class="table table-striped" cellspacing="0" cellpadding="0">
+					<thead>
+						<tr>
+							<th>@Html.DisplayName("ID")</th>
+							<th>@Html.DisplayName("Tipo")</th>
+							<th>@Html.DisplayName("Quantidade")</th>
+							<th>@Html.DisplayName("Fabricação")</th>
+							<th>@Html.DisplayName("Fornecedor")</th>
+							<th>@Html.DisplayName("Valor")</th>
+							<th class="actions">Ações</th>
+						</tr>
+					</thead>
+					<tbody>
+                        @foreach (var item in Model) {
+                            <tr>
+                                <td>@item.IdJumpers</td>
+                                <td>@item.TypeJumpers</td>
+                                <td>@item.QntdJumpers</td>
+                                <td>
+                                    @Html.ActionLink("Editar", "Editar", new{ id=item.IdJumpers }) |
+                                    @Html.ActionLink("Visualizar", "Visualizar", new { id=item.IdJumpers }) |
+                                    @Html.ActionLink("Excluir", "Excluir", new { id=item.IdJumpers })
+                                </td>
+                            </tr>
+                        }
+						<tr>
+							<td>003</td>
+							<td>Femea-Femea</td>
+							<td>200</td>
+							<td>01/01/2016</td>
+							<td>BlaBlaBla</td>
+							<td>BlaBlaBla</td>
+							<td class="actions">
+								<a class="btn btn-success btn-xs" href="/ControleJumpers/Visualizar">Visualizar</a>
+								<a class="btn btn-warning btn-xs" href="/ControleJumpers/Editar">Editar</a>
+								<a class="btn btn-danger btn-xs" href="#" data-toggle="modal" data-target="#delete-modal">Excluir</a>
+							</td>
+						</tr>
+
+					</tbody>
+				</table>
+			</div>			
+		</div>
+        <div id="bottom" class="row">
+			<div class="col-md-12">
+			
+				<ul class="pagination">
+					<li class="disabled"><a>Anterior</a></li>
+					<li class="disabled"><a>1</a></li>
+					<li><a href="#">2</a></li>
+					<li><a href="#">3</a></li>
+					<li class="next"><a href="#" rel="next">próximo</a></li>
+				</ul>
+			
+			</div>
+		</div>
+	</div>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/js")
+        @Styles.Render("~/Content/")
+</body>
