@@ -16,10 +16,10 @@ namespace AspNet.CRUD.Models
     {
         [Required(ErrorMessage = "Obrigatório informar o tipo")]
         [StringLength(30, ErrorMessage = "O tipo deve possuir no máximo 30 caracteres")]
-        public string Type { get; set; }
+        public string TypeJumpers { get; set; }
 
         [Required(ErrorMessage = "Obrigatório informar a quantidade")]
-        public int Qntd { get; set; }
+        public int QntdJumpers { get; set; }
 
     }
 }

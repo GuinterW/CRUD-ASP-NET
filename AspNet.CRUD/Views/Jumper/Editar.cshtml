@@ -1,0 +1,31 @@
+﻿@model AspNet.CRUD.Models.Jumpers
+
+@{ViewBag.Title = "Visualizar";}
+<br>
+	<body>
+        <br><br>
+		<div id="main" class="container-fluid">
+        <fieldset>
+            <legend>Dados do jumper</legend>
+                @Html.HiddenFor(model => model.IDJumpers)
+            <div class="editor-label">
+                @Html.LabelFor(model => model.TypeJumpers)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.TypeJumpers)
+                @Html.ValidationMessageFor(model => model.TypeJumpers)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.QntdJumpers)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.QntdJumpers)
+                @Html.ValidationMessageFor(model => model.QntdJumpers)
+            </div>
+        </fieldset>
+	 		<hr />
+            @Html.ActionLink("Voltar", "Index")
+		</div>
+<!--		<script src="js/jquery.min.js"></script>
+	 	<script src="js/bootstrap.min.js"></script> -->
+	</body>

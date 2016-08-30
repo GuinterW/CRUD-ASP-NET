@@ -1,0 +1,38 @@
+﻿@model AspNet.CRUD.Models.Jumpers
+
+@{ViewBag.Title = "Adicionar";}
+<br><br>
+<h2>Adicionar</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Jumpers</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TypeJumpers)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TypeJumpers)
+            @Html.ValidationMessageFor(model => model.TypeJumpers)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.QntdJumpers)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.QntdJumpers)
+            @Html.ValidationMessageFor(model => model.QntdJumpers)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

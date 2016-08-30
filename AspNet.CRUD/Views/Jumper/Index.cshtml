@@ -1,6 +1,6 @@
-﻿@model AspNet.CRUD.Jumpers[]
+﻿@model IEnumerable<AspNet.CRUD.Models.Jumpers>
 
-@{ ViewBag.Title = "Página Inicial"; }
+@{ViewBag.Title = "Página Inicial";}
 <body>
 	<!-- Modal -->
 	<div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
@@ -39,7 +39,7 @@
 			</div>
 			
 			<div class="col-md-3">
-	            <a href="/ControleJumpers/Adicionar" class="btn btn-primary pull-right h2">Novo Item</a>
+	            <a href="/Jumper/Adicionar" class="btn btn-primary pull-right h2">Novo Item</a>
 			</div>
 		</div>
 
@@ -62,13 +62,13 @@
 					<tbody>
                         @foreach (var item in Model) {
                             <tr>
-                                <td>@item.IdJumpers</td>
+                                <td>@item.IDJumpers</td>
                                 <td>@item.TypeJumpers</td>
                                 <td>@item.QntdJumpers</td>
                                 <td>
-                                    @Html.ActionLink("Editar", "Editar", new{ id=item.IdJumpers }) |
-                                    @Html.ActionLink("Visualizar", "Visualizar", new { id=item.IdJumpers }) |
-                                    @Html.ActionLink("Excluir", "Excluir", new { id=item.IdJumpers })
+                                    @Html.ActionLink("Editar", "Editar", new{ id=item.IDJumpers }) |
+                                    @Html.ActionLink("Visualizar", "Visualizar", new { id=item.IDJumpers }) |
+                                    @Html.ActionLink("Excluir", "Excluir", new { id=item.IDJumpers })
                                 </td>
                             </tr>
                         }
@@ -80,8 +80,8 @@
 							<td>BlaBlaBla</td>
 							<td>BlaBlaBla</td>
 							<td class="actions">
-								<a class="btn btn-success btn-xs" href="/ControleJumpers/Visualizar">Visualizar</a>
-								<a class="btn btn-warning btn-xs" href="/ControleJumpers/Editar">Editar</a>
+								<a class="btn btn-success btn-xs" href="/Jumper/Visualizar">Visualizar</a>
+								<a class="btn btn-warning btn-xs" href="/Jumper/Editar">Editar</a>
 								<a class="btn btn-danger btn-xs" href="#" data-toggle="modal" data-target="#delete-modal">Excluir</a>
 							</td>
 						</tr>
