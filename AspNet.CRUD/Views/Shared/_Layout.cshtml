@@ -29,12 +29,16 @@
 		            </div>
 	            </div>
 	        </nav>
+            <br>
         </header>
-            <div class="container">
-                @RenderBody()
+        <div class="container-fluid">
+            <br><br>
+            <div class="col-md-3">
+            @RenderBody()
             </div>
-            @Scripts.Render("~/bundles/jquery")
-            @Scripts.Render("~/bundles/bootstrap")
-            @RenderSection("scripts", required: false)
+        </div>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
     </body>
 </html>

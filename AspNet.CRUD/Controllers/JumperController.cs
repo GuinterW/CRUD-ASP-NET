@@ -13,16 +13,23 @@ namespace ProjetoCRUD.Controllers
     {
         private DBComponentsEntities db = new DBComponentsEntities();
 
+        [HttpGet]
         public ActionResult Index()
+        {
+            return View("Index");
+        }
+
+        [HttpPost]
+        public ActionResult Index(string search)
         {
             Jumpers[] jumpers = null;
 
             using (var db = new DBComponentsEntities())
             {
-                jumpers = db.Jumpers.ToArray();
+                jumpers = db.Jumpers.Where(x => (search != null && x.TypeJumpers.Contains(search)) || search == null).ToArray();
             }
 
-            return View("Index", model: jumpers);
+            return PartialView("_Listagem", jumpers);
         }
 
         public ActionResult Adicionar()
@@ -80,20 +87,13 @@ namespace ProjetoCRUD.Controllers
             return View(jumper);
         }
 
-        public string Excluir(long id)
+        public JsonResult Excluir(long id)
         {
-            try
-            {
-                Jumpers jumper = db.Jumpers.Find(id);
-                db.Jumpers.Remove(jumper);
-                db.SaveChanges();
-                // return Boolean.TrueString;
-                return RedirectToAction("Index").ToString();
-            }
-            catch
-            {
-                return Boolean.FalseString;
-            }
+            Jumpers jumper = db.Jumpers.Find(id);
+            db.Jumpers.Remove(jumper);
+            db.SaveChanges();
+
+            return Json(new { Success = true });
         }
     }
 }

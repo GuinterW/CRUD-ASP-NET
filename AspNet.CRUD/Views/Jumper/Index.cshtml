@@ -1,78 +1,36 @@
-﻿@model IEnumerable<AspNet.CRUD.Models.Jumpers>
+﻿@{ViewBag.Title = "Página Inicial";}
+@section scripts
+{
+    <script type="text/javascript">
+        function pesquisarOnSuccess(data) {
+            console.log(data);
+        }
+        $(document).ready(function () {
+            $("[data-acao=excluir]").on('click', function () {
+                var self = $(this);
 
-@{ViewBag.Title = "Página Inicial";}
-<body>
-	<!-- Modal -->
-	@Html.Partial("_Excluir", Model);
-	<div id="main" class="container-fluid">
-		<br><br><br><br>
-		<div id="top" class="row">
-			<div class="col-md-3">
-				<h2>Itens</h2>
-			</div>
+                var modalHtml = $("[data-id=delete-modal]").clone();
+                var modalObj = $(modalHtml).Cmodal({
+                    keyboard: false
+                });
 
-			<div class="col-md-6">
-				<div class="input-group h2">
-					<input name="data[search]" class="form-control" id="search" type="text" placeholder="Pesquisar Itens">
-					<span class="input-group-btn">
-						<button class="btn btn-primary" type="submit">
-							<span class="glyphicon glyphicon-search"></span>
-						</button>
-					</span>	
-				</div>
-			</div>
-			
-			<div class="col-md-3">
-              <!--  @Html.ActionLink("Adicionar", "Adicionar", new { }, new { @class = "btn btn-primary btn-xs" }) -->
-	            <a href="/Jumper/Adicionar" class="btn btn-primary pull-right h2">Novo Item</a>
-			</div>
-		</div>
-
-		<hr />
-		<div id="list" class="row">
-			
-			<div class="table-respoonsive col-md-12">
-				<table class="table table-striped" cellspacing="0" cellpadding="0">
-					<thead>
-						<tr>
-							<th>@Html.DisplayName("ID")</th>
-							<th>@Html.DisplayName("Tipo")</th>
-							<th>@Html.DisplayName("Quantidade")</th>
-							<th>@Html.DisplayName("Ações")</th>
-						</tr>
-					</thead>
-					<tbody>
-                        @foreach (var item in Model) {
-                            <tr>
-                                <td>@item.IDJumpers</td>
-                                <td>@item.TypeJumpers</td>
-                                <td>@item.QntdJumpers</td>
-                                <td>
-                                    @Html.ActionLink("Editar", "Editar", new { id=item.IDJumpers }, new { @class = "btn btn-warning btn-xs" }) 
-                                    @Html.ActionLink("Visualizar", "Visualizar", new { id=item.IDJumpers }, new { @class = "btn btn-success btn-xs" }) 
-               					    <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#delete-modal">Excluir</button>
-                                </td>
-                            </tr>
+                modalObj.find('[data-id=confirmRemove]').click(function () {
+                    $.post(self.attr('data-excluirUrl'), function (data) {
+                        if (data.Success) {
+                            modalObj.modal('hide');
                         }
-					</tbody>
-				</table>
-			</div>			
-		</div>
-        <div id="bottom" class="row">
-			<div class="col-md-12">
-			
-				<ul class="pagination">
-					<li class="disabled"><a>Anterior</a></li>
-					<li class="disabled"><a>1</a></li>
-					<li><a href="#">2</a></li>
-					<li><a href="#">3</a></li>
-					<li class="next"><a href="#" rel="next">próximo</a></li>
-				</ul>
-			
-			</div>
-		</div>
-	</div>
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/js")
-        @Styles.Render("~/Content/")
-</body>
+                    });
+                });
+            });
+        });
+    </script>
+}
+<div class="container-fluid">
+    @using (Ajax.BeginForm(actionName: "Index", controllerName: "Jumper", routeValues: null, ajaxOptions: new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "resultSearch", OnSuccess = "pesquisarOnSuccess"  }, htmlAttributes: new { /*HTML*/ }))
+    {
+        <input type="text" name="search" />
+        <input type="submit" value="Pesquisar" class="btn btn-default" />
+    }
+    <div id="resultSearch">
+    </div>
+</div>

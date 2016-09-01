@@ -1,0 +1,72 @@
+﻿@model IEnumerable<AspNet.CRUD.Models.Jumpers>
+@* @model string *@
+@{ViewBag.Title = "Página Inicial";}
+
+<h1>@Model</h1>
+
+<br><br>
+<div id="top" class="row">
+	<div class="col-md-3">
+		<h2>Itens</h2>
+	</div>
+
+	<div class="col-md-6">
+		<div class="input-group h2">
+			<input name="data[search]" class="form-control" id="search" type="text" placeholder="Pesquisar Itens">
+			<span class="input-group-btn">
+				<button class="btn btn-primary" type="submit">
+					<span class="glyphicon glyphicon-search"></span>
+				</button>
+			</span>	
+		</div>
+	</div>
+			
+	<div class="col-md-3">
+        <!--  @Html.ActionLink("Adicionar", "Adicionar", new { }, new { @class = "btn btn-primary btn-xs" }) -->
+	    <a href="/Jumper/Adicionar" class="btn btn-primary pull-right h2">Novo Item</a>
+	</div>
+</div>
+
+<hr />
+<div id="list" class="row">
+			
+	<div class="table-respoonsive col-md-12">
+		<table class="table table-striped" cellspacing="0" cellpadding="0">
+			<thead>
+				<tr>
+					<th>@Html.DisplayName("ID")</th>
+					<th>@Html.DisplayName("Tipo")</th>
+					<th>@Html.DisplayName("Quantidade")</th>
+					<th>@Html.DisplayName("Ações")</th>
+				</tr>
+			</thead>
+			<tbody>
+                @foreach (var item in Model) {
+                    <tr>
+                        <td>@item.IDJumpers</td>
+                        <td>@item.TypeJumpers</td>
+                        <td>@item.QntdJumpers</td>
+                        <td>
+                            @Html.ActionLink("Editar", "Editar", new { id=item.IDJumpers }, new { @class = "btn btn-warning btn-xs" }) 
+                            @Html.ActionLink("Visualizar", "Visualizar", new { id=item.IDJumpers }, new { @class = "btn btn-success btn-xs" }) 
+               				<button data-excluirUrl="@Url.Action("Excluir", new { id = item.IDJumpers })" data-acao="excluir" type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#delete-modal">Excluir</button>
+                        </td>
+                    </tr>
+                }
+			</tbody>
+		</table>
+	</div>			
+</div>
+<div id="bottom" class="row">
+	<div class="col-md-12">
+			
+		<ul class="pagination">
+			<li class="disabled"><a>Anterior</a></li>
+			<li class="disabled"><a>1</a></li>
+			<li><a href="#">2</a></li>
+			<li><a href="#">3</a></li>
+			<li class="next"><a href="#" rel="next">próximo</a></li>
+		</ul>
+			
+	</div>
+</div>
