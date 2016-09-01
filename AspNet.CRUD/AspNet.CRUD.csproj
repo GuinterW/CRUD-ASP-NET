@@ -218,10 +218,13 @@
     <Content Include="Views\Jumper\Editar.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Views\Jumper\Visualizar.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Views\Jumper\Excluir.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Jumper\Visualizar.cshtml" />
+    <Content Include="Views\Jumper\_Excluir.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

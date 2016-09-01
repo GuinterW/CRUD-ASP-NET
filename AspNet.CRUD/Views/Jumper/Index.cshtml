@@ -3,23 +3,7 @@
 @{ViewBag.Title = "Página Inicial";}
 <body>
 	<!-- Modal -->
-	<div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="modalLabel">Excluir Item</h4>
-				</div>
-				<div class="modal-body">
-					Deseja realmente excluir este item?
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-primary">Sim</button>
-					<button type="button" class="btn btn-default" data-dismiss="modal">N&atilde;o</button>
-				</div>
-			</div>
-		</div>
-	</div>
+	@Html.Partial("_Excluir", Model);
 	<div id="main" class="container-fluid">
 		<br><br><br><br>
 		<div id="top" class="row">
@@ -39,6 +23,7 @@
 			</div>
 			
 			<div class="col-md-3">
+              <!--  @Html.ActionLink("Adicionar", "Adicionar", new { }, new { @class = "btn btn-primary btn-xs" }) -->
 	            <a href="/Jumper/Adicionar" class="btn btn-primary pull-right h2">Novo Item</a>
 			</div>
 		</div>
@@ -53,10 +38,7 @@
 							<th>@Html.DisplayName("ID")</th>
 							<th>@Html.DisplayName("Tipo")</th>
 							<th>@Html.DisplayName("Quantidade")</th>
-							<th>@Html.DisplayName("Fabricação")</th>
-							<th>@Html.DisplayName("Fornecedor")</th>
-							<th>@Html.DisplayName("Valor")</th>
-							<th class="actions">Ações</th>
+							<th>@Html.DisplayName("Ações")</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -66,26 +48,12 @@
                                 <td>@item.TypeJumpers</td>
                                 <td>@item.QntdJumpers</td>
                                 <td>
-                                    @Html.ActionLink("Editar", "Editar", new{ id=item.IDJumpers }) |
-                                    @Html.ActionLink("Visualizar", "Visualizar", new { id=item.IDJumpers }) |
-                                    @Html.ActionLink("Excluir", "Excluir", new { id=item.IDJumpers })
+                                    @Html.ActionLink("Editar", "Editar", new { id=item.IDJumpers }, new { @class = "btn btn-warning btn-xs" }) 
+                                    @Html.ActionLink("Visualizar", "Visualizar", new { id=item.IDJumpers }, new { @class = "btn btn-success btn-xs" }) 
+               					    <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#delete-modal">Excluir</button>
                                 </td>
                             </tr>
                         }
-						<tr>
-							<td>003</td>
-							<td>Femea-Femea</td>
-							<td>200</td>
-							<td>01/01/2016</td>
-							<td>BlaBlaBla</td>
-							<td>BlaBlaBla</td>
-							<td class="actions">
-								<a class="btn btn-success btn-xs" href="/Jumper/Visualizar">Visualizar</a>
-								<a class="btn btn-warning btn-xs" href="/Jumper/Editar">Editar</a>
-								<a class="btn btn-danger btn-xs" href="#" data-toggle="modal" data-target="#delete-modal">Excluir</a>
-							</td>
-						</tr>
-
 					</tbody>
 				</table>
 			</div>			

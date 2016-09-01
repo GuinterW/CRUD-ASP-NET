@@ -87,13 +87,13 @@ namespace ProjetoCRUD.Controllers
                 Jumpers jumper = db.Jumpers.Find(id);
                 db.Jumpers.Remove(jumper);
                 db.SaveChanges();
-                return Boolean.TrueString;
+                // return Boolean.TrueString;
+                return RedirectToAction("Index").ToString();
             }
             catch
             {
                 return Boolean.FalseString;
             }
         }
-
     }
 }
