@@ -87,6 +87,13 @@ namespace ProjetoCRUD.Controllers
             return View(jumper);
         }
 
+        [HttpGet]
+        public ActionResult ExcluirConfirmacao(long id)
+        {
+            return PartialView("_Excluir", id);
+        }
+
+        [HttpPost]
         public JsonResult Excluir(long id)
         {
             Jumpers jumper = db.Jumpers.Find(id);

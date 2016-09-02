@@ -2,35 +2,42 @@
 @section scripts
 {
     <script type="text/javascript">
-        function pesquisarOnSuccess(data) {
-            console.log(data);
+        var modalConfirmacao = null;
+
+        function confirmacaoExcluirOnSuccess(data) {
+            var html = $($.trim(data));
+            modalConfirmacao = $(html).modal();
+        };
+
+        function excluirOnSuccess(json) {
+            if (modalConfirmacao != null) {
+                
+                modalConfirmacao = null;
+            }
         }
-        $(document).ready(function () {
-            $("[data-acao=excluir]").on('click', function () {
-                var self = $(this);
-
-                var modalHtml = $("[data-id=delete-modal]").clone();
-                var modalObj = $(modalHtml).Cmodal({
-                    keyboard: false
-                });
-
-                modalObj.find('[data-id=confirmRemove]').click(function () {
-                    $.post(self.attr('data-excluirUrl'), function (data) {
-                        if (data.Success) {
-                            modalObj.modal('hide');
-                        }
-                    });
-                });
-            });
-        });
     </script>
 }
 <div class="container-fluid">
-    @using (Ajax.BeginForm(actionName: "Index", controllerName: "Jumper", routeValues: null, ajaxOptions: new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "resultSearch", OnSuccess = "pesquisarOnSuccess"  }, htmlAttributes: new { /*HTML*/ }))
+    @using (Ajax.BeginForm(actionName: "Index", controllerName: "Jumper", routeValues: null, ajaxOptions: new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "resultSearch" }, htmlAttributes: new { /*HTML*/ }))
     {
-        <input type="text" name="search" />
-        <input type="submit" value="Pesquisar" class="btn btn-default" />
+        <div id="top" class="row">
+	        <div class="col-md-3"></div>
+            <div class="col-md-6">
+		        <div class="input-group h2">
+			        <input name="search" class="form-control" id="search" type="text" placeholder="Pesquisar Itens">
+			        <span class="input-group-btn">
+				        <button class="btn btn-primary" value="Pesquisar" type="submit">
+					        <span class="glyphicon glyphicon-search"></span>
+				        </button>
+			        </span>	
+		        </div>
+	        </div>
+            <div class="col-md-3">
+                <a href="/Jumper/Adicionar" class="btn btn-primary pull-right h2">Novo Item</a>
+            </div>
+        </div>
     }
     <div id="resultSearch">
+
     </div>
 </div>

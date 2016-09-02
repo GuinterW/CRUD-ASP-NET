@@ -1,4 +1,8 @@
-﻿@{ViewBag.Title = "Excluir";}
+﻿@model long
+
+@* 
+Model é o ID do item a ser excluido!
+*@
 
 <div class="modal fade" data-id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
 	<div class="modal-dialog" role="document">
@@ -11,8 +15,9 @@
 				Deseja realmente excluir este item?
 			</div>
 			<div class="modal-footer">
-				<button type="button" data-id="confirmRemove" class="btn btn-primary">Sim</button>
-				<button type="button" class="btn btn-default" data-dismiss="modal">N&atilde;o</button>
+                @Ajax.ActionLink("Aham", "Excluir", new { id=item.IDJumpers }, new AjaxOptions() { HttpMethod = "GET", OnSuccess = "confirmacaoExcluirOnSuccess" }, new { @class = "btn btn-primary btn-xs" })
+				@*<button type="button" data-id="confirmRemove" class="btn btn-primary">Sim</button>*@
+				<button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
 			</div>
 		</div>
 	</div>

@@ -1,36 +1,10 @@
 ﻿@model IEnumerable<AspNet.CRUD.Models.Jumpers>
 @* @model string *@
 @{ViewBag.Title = "Página Inicial";}
-
-<h1>@Model</h1>
-
 <br><br>
-<div id="top" class="row">
-	<div class="col-md-3">
-		<h2>Itens</h2>
-	</div>
-
-	<div class="col-md-6">
-		<div class="input-group h2">
-			<input name="data[search]" class="form-control" id="search" type="text" placeholder="Pesquisar Itens">
-			<span class="input-group-btn">
-				<button class="btn btn-primary" type="submit">
-					<span class="glyphicon glyphicon-search"></span>
-				</button>
-			</span>	
-		</div>
-	</div>
-			
-	<div class="col-md-3">
-        <!--  @Html.ActionLink("Adicionar", "Adicionar", new { }, new { @class = "btn btn-primary btn-xs" }) -->
-	    <a href="/Jumper/Adicionar" class="btn btn-primary pull-right h2">Novo Item</a>
-	</div>
-</div>
-
 <hr />
 <div id="list" class="row">
-			
-	<div class="table-respoonsive col-md-12">
+    <div class="table-respoonsive col-md-12">
 		<table class="table table-striped" cellspacing="0" cellpadding="0">
 			<thead>
 				<tr>
@@ -48,8 +22,8 @@
                         <td>@item.QntdJumpers</td>
                         <td>
                             @Html.ActionLink("Editar", "Editar", new { id=item.IDJumpers }, new { @class = "btn btn-warning btn-xs" }) 
-                            @Html.ActionLink("Visualizar", "Visualizar", new { id=item.IDJumpers }, new { @class = "btn btn-success btn-xs" }) 
-               				<button data-excluirUrl="@Url.Action("Excluir", new { id = item.IDJumpers })" data-acao="excluir" type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#delete-modal">Excluir</button>
+                            @Html.ActionLink("Visualizar", "Visualizar", new { id=item.IDJumpers }, new { @class = "btn btn-success btn-xs" })
+                            @Ajax.ActionLink("Excluir", "ExcluirConfirmacao", new { id=item.IDJumpers }, new AjaxOptions() { HttpMethod = "GET", OnSuccess = "confirmacaoExcluirOnSuccess" }, new { @class = "btn btn-danger btn-xs" })
                         </td>
                     </tr>
                 }
