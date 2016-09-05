@@ -94,13 +94,12 @@ namespace ProjetoCRUD.Controllers
         }
 
         [HttpPost]
-        public JsonResult Excluir(long id)
+        public ActionResult Excluir(long id)
         {
             Jumpers jumper = db.Jumpers.Find(id);
             db.Jumpers.Remove(jumper);
             db.SaveChanges();
-
-            return Json(new { Success = true });
+            return RedirectToAction("Index");
         }
     }
 }

@@ -3,22 +3,23 @@
 {
     <script type="text/javascript">
         var modalConfirmacao = null;
-
+        //trim faz com que espaços em branco sejam retirados.
         function confirmacaoExcluirOnSuccess(data) {
             var html = $($.trim(data));
             modalConfirmacao = $(html).modal();
         };
 
-        function excluirOnSuccess(json) {
+        function excluirOnSuccess() {
             if (modalConfirmacao != null) {
-                
+                $('.modal').modal('hide');
                 modalConfirmacao = null;
+                $('#pesquisarForm').submit();
             }
         }
     </script>
 }
 <div class="container-fluid">
-    @using (Ajax.BeginForm(actionName: "Index", controllerName: "Jumper", routeValues: null, ajaxOptions: new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "resultSearch" }, htmlAttributes: new { /*HTML*/ }))
+    @using (Ajax.BeginForm(actionName: "Index", controllerName: "Jumper", routeValues: null, ajaxOptions: new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "resultSearch" }, htmlAttributes: new { id = "pesquisarForm" }))
     {
         <div id="top" class="row">
 	        <div class="col-md-3"></div>
