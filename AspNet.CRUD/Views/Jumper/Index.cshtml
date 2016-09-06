@@ -3,6 +3,7 @@
 {
     <script type="text/javascript">
         var modalConfirmacao = null;
+        var modalAdicionar = null;
         //trim faz com que espaços em branco sejam retirados.
         function confirmacaoExcluirOnSuccess(data) {
             var html = $($.trim(data));
@@ -11,16 +12,45 @@
 
         function excluirOnSuccess() {
             if (modalConfirmacao != null) {
-                $('.modal').modal('hide');
+                modalConfirmacao.modal('hide');
                 modalConfirmacao = null;
                 $('#pesquisarForm').submit();
             }
         }
+
+        function cadastrarItemOnSuccess() {
+            if (modalAdicionar != null) {
+                modalAdicionar.modal('hide');
+                modalAdicionar = null;
+                $('#pesquisarForm').submit();
+            }
+        }
+
+        function confirmacaoAdicionarOnSuccess(data) {
+            console.log('ON SUCCESS TRIGGERED');
+
+            var html = $($.trim(data));
+            html.find('#btnAdicionarItem').click(function () {
+                html.find('form').submit();
+            });
+
+            html.find('form').submit(function () {
+                var form = $(this);
+
+                $.validator.unobtrusive.parse(form);
+                if (!form.valid())
+                    return false;
+            });
+
+            modalAdicionar = $(html).modal();
+        };
+
     </script>
 }
 <div class="container-fluid">
     @using (Ajax.BeginForm(actionName: "Index", controllerName: "Jumper", routeValues: null, ajaxOptions: new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "resultSearch" }, htmlAttributes: new { id = "pesquisarForm" }))
     {
+        @Html.Hidden("pageIndex", 3)
         <div id="top" class="row">
 	        <div class="col-md-3"></div>
             <div class="col-md-6">
@@ -30,15 +60,26 @@
 				        <button class="btn btn-primary" value="Pesquisar" type="submit">
 					        <span class="glyphicon glyphicon-search"></span>
 				        </button>
-			        </span>	
+			        </span>
 		        </div>
 	        </div>
             <div class="col-md-3">
-                <a href="/Jumper/Adicionar" class="btn btn-primary pull-right h2">Novo Item</a>
+                @Ajax.ActionLink("Novo Item", "Adicionar", new {}, new AjaxOptions() { HttpMethod = "GET", OnSuccess = "confirmacaoAdicionarOnSuccess" }, new { @class = "btn btn-primary pull-right h2" })
             </div>
         </div>
     }
     <div id="resultSearch">
 
     </div>
+    
+
+    @* 
+    
+    Paginação:
+    Primeiro e ultima página
+    Campo númerico
+    
+    Submeter página atual
+
+    *@
 </div>

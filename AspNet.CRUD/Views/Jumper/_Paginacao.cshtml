@@ -1,0 +1,23 @@
+﻿@model AspNet.CRUD.ViewModel.PaginacaoViewModel
+
+@Model.Count
+@Model.PageIndex 
+@Model.Form
+
+@* 
+
+Criar páginação:
+
+* Renderizar a quantidade de botões
+* Dica: ViewBag
+* A paginação deverá atualizar o formulário através de javascript
+* O count será o total de botões
+
+*@
+
+@Html.RenderPartial("asfsafasf", new AspNet.CRUD.ViewModel.PaginacaoViewModel() { Count = 12, Form = "teste", PageIndex = 0, PageIndexName = "pageIndex" });
+
+<script type="text/javascript">
+    $('#@Model.Form').find('[name=@pageIndex]')
+    $('#@Model.Form').submit();
+</script>

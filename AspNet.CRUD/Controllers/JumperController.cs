@@ -19,22 +19,32 @@ namespace ProjetoCRUD.Controllers
             return View("Index");
         }
 
+        //Paginação 10 itens por página
+
         [HttpPost]
-        public ActionResult Index(string search)
+        public ActionResult Index(string search, int pageIndex = 0)
         {
             Jumpers[] jumpers = null;
 
             using (var db = new DBComponentsEntities())
             {
-                jumpers = db.Jumpers.Where(x => (search != null && x.TypeJumpers.Contains(search)) || search == null).ToArray();
+                var query = db.Jumpers.Where(x => (search != null && x.TypeJumpers.Contains(search)) || search == null);
+
+                var count = query.Count();
+                var items = query.OrderByDescending(x => x.IDJumpers).Skip(0).Take(10);
+
+                jumpers = items.ToArray();
+
+                ViewBag.Count = 10;
             }
 
             return PartialView("_Listagem", jumpers);
         }
 
+        [HttpGet]
         public ActionResult Adicionar()
         {
-            return View();
+            return PartialView("Adicionar");
         }
 
         [HttpPost]
@@ -49,10 +59,10 @@ namespace ProjetoCRUD.Controllers
                 };
                 db.Jumpers.Add(jumper);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return Json(new { Success = true });
             }
 
-            return View(jumps);
+            return Json(new { Success = false });
         }
 
         public ActionResult Editar(int id)

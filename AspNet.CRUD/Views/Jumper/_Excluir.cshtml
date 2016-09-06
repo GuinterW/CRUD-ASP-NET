@@ -15,7 +15,6 @@ Model é o ID do item a ser excluido!
 			</div>
 			<div class="modal-footer">
                 @Ajax.ActionLink("Aham", "Excluir", new { id = Model }, new AjaxOptions() { HttpMethod = "POST", OnSuccess = "excluirOnSuccess" }, new { @class = "btn btn-primary" })
-				@*<button type="button" data-id="confirmRemove" class="btn btn-primary">Sim</button>*@
 				<button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
 			</div>
 		</div>
