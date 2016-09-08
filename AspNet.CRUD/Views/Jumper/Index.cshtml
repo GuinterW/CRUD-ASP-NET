@@ -2,48 +2,47 @@
 @section scripts
 {
     <script type="text/javascript">
-        var modalConfirmacao = null;
-        var modalAdicionar = null;
-        //trim faz com que espaços em branco sejam retirados.
-        function confirmacaoExcluirOnSuccess(data) {
-            var html = $($.trim(data));
-            modalConfirmacao = $(html).modal();
-        };
 
-        function excluirOnSuccess() {
-            if (modalConfirmacao != null) {
-                modalConfirmacao.modal('hide');
-                modalConfirmacao = null;
-                $('#pesquisarForm').submit();
+            var modalConfirmacao = null;
+            var modalAdicionar = null;
+            //trim faz com que espaços em branco sejam retirados.
+            function confirmacaoExcluirOnSuccess(data) {
+                var html = $($.trim(data));
+                modalConfirmacao = $(html).modal();
+            };
+
+            function excluirOnSuccess() {
+                if (modalConfirmacao != null) {
+                    modalConfirmacao.modal('hide');
+                    modalConfirmacao = null;
+                    $('#pesquisarForm').submit();
+                }
             }
-        }
 
-        function cadastrarItemOnSuccess() {
-            if (modalAdicionar != null) {
-                modalAdicionar.modal('hide');
-                modalAdicionar = null;
-                $('#pesquisarForm').submit();
+            function cadastrarItemOnSuccess() {
+                if (modalAdicionar != null) {
+                    modalAdicionar.modal('hide');
+                    modalAdicionar = null;
+                    $('#pesquisarForm').submit();
+                }
             }
-        }
 
-        function confirmacaoAdicionarOnSuccess(data) {
-            console.log('ON SUCCESS TRIGGERED');
+            function confirmacaoAdicionarOnSuccess(data) {
+                console.log('ON SUCCESS TRIGGERED');
 
-            var html = $($.trim(data));
-            html.find('#btnAdicionarItem').click(function () {
-                html.find('form').submit();
-            });
+                var html = $($.trim(data));
+                html.find('#btnAdicionarItem').click(function () {
+                    html.find('form').submit();
+                });
 
-            html.find('form').submit(function () {
-                var form = $(this);
-
-                $.validator.unobtrusive.parse(form);
-                if (!form.valid())
-                    return false;
-            });
-
-            modalAdicionar = $(html).modal();
-        };
+                html.find('form').submit(function () {
+                    var form = $(this);
+                    $.validator.unobtrusive.parse(form);
+                    if (!form.valid())
+                        return false;
+                });
+                modalAdicionar = $(html).modal();
+            };
 
     </script>
 }

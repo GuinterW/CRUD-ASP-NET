@@ -13,11 +13,74 @@ Criar páginação:
 * A paginação deverá atualizar o formulário através de javascript
 * O count será o total de botões
 
+
+
 *@
 
-@Html.RenderPartial("asfsafasf", new AspNet.CRUD.ViewModel.PaginacaoViewModel() { Count = 12, Form = "teste", PageIndex = 0, PageIndexName = "pageIndex" });
+@*@{Html.RenderPartial("asfsafasf", new AspNet.CRUD.ViewModel.PaginacaoViewModel());}*@
+@*@{Html.RenderPartial("_listagem", new AspNet.CRUD.ViewModel.PaginacaoViewModel() { Count = 12, Form = "teste", PageIndex = 0, PageIndexName = "pageIndex" });}*@
+
+<div id="partialView"></div>
+
+@*Paginação 10 itens por página*@
+<div id="bottom" class="row">
+	<div class="col-md-12">
+		<ul class="pagination">
+			@using (Html.BeginForm("Index", "JumperController", FormMethod.Post, new { }))
+            {
+                Html.Hidden("pageIndex", 1);
+                <li id="FirstPage"><a>Primeira Página</a></li>
+            }
+            @using (Html.BeginForm("Index", "JumperController", FormMethod.Post, new { }))
+            {
+                Html.Hidden("pageIndex", 0);
+                <li id="LastPage"><a>Última Página</a></li>
+            }
+            @using (Html.BeginForm("Index", "JumperController", FormMethod.Post, new { }))
+            {
+                <input class="text-box single-line" data-val="true" id="EscolhaPagina" name="pageIndex" type="number">
+            }
+            
+            
+            
+            
+@*            <li id="FirstPage"><a>Primeira Página</a></li>
+			<li id="LastPage"><a>Última Página</a></li>
+            <input class="text-box single-line" data-val="true" id="EscolhaPagina" name="EscolhaPagina" type="number">*@
+        </ul>
+			
+	</div>
+</div>
+
+
+
 
 <script type="text/javascript">
-    $('#@Model.Form').find('[name=@pageIndex]')
-    $('#@Model.Form').submit();
+
+    @*$('#@Model.Form').find('[name=@pageIndex]');
+    $('#@Model.Form').submit();*@
+
+    html.find('#FirstPage').click(function () {
+        
+    });
+
+    html.find('#LastPage').click(function () {
+
+    });
+
+    var EscolhaPagina = $('#EscolhaPagina').val();
+
+    $.ajax({
+        type: "POST",
+        url: "~/JumperController/Index",
+        data: { pageIndex: EscolhaPagina },
+        success: function (data) {
+            alert("meu pastel é mais barato, etchalele");
+            $("#partialView").html(data);
+        },
+        error: function () {
+            alert("deu ruim, culpa do guinter");
+        }
+    });
+    
 </script>
