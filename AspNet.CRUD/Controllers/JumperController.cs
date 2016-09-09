@@ -28,14 +28,14 @@ namespace ProjetoCRUD.Controllers
             {
                 var query = db.Jumpers.Where(x => (search != null && x.TypeJumpers.Contains(search)) || search == null);
 
-                var xxxxx = (pageIndex - 1) * 10;
-
+                var ItensSkip = (pageIndex - 1) * 10;
+                
                 var count = query.Count();
-                var itens = query.OrderByDescending(x => x.IDJumpers).Skip(xxxxx).Take(10);
+                var itens = query.OrderByDescending(x => x.IDJumpers).Skip(0).Take(10);
 
                 jumpers = itens.ToArray();
-
-                ViewBag.Count = 10;
+                ViewBag.dados = jumpers;
+                ViewBag.Count = 10; 
             }
 
             return PartialView("_Listagem", jumpers);

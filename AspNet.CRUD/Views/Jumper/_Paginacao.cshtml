@@ -1,86 +1,88 @@
 ﻿@model AspNet.CRUD.ViewModel.PaginacaoViewModel
 
-@Model.Count
+@*@Model.Count
 @Model.PageIndex 
-@Model.Form
+@Model.Form*@
 
-@* 
-
+@*
 Criar páginação:
-
+* Primeiro e ultima página
+* Campo númerico
 * Renderizar a quantidade de botões
+* O count será o total de botões
 * Dica: ViewBag
 * A paginação deverá atualizar o formulário através de javascript
-* O count será o total de botões
-
+* Submeter página atual
 
 
 *@
 
-@*@{Html.RenderPartial("asfsafasf", new AspNet.CRUD.ViewModel.PaginacaoViewModel());}*@
-@*@{Html.RenderPartial("_listagem", new AspNet.CRUD.ViewModel.PaginacaoViewModel() { Count = 12, Form = "teste", PageIndex = 0, PageIndexName = "pageIndex" });}*@
-
-<div id="partialView"></div>
+@*@{Html.RenderPartial("asfsafasf", new AspNet.CRUD.ViewModel.PaginacaoViewModel()){ Count = 12, Form = "teste", PageIndex = 0, PageIndexName = "pageIndex" });}*@
 
 @*Paginação 10 itens por página*@
+<div id="partialView"></div>
 <div id="bottom" class="row">
 	<div class="col-md-12">
 		<ul class="pagination">
-			@using (Html.BeginForm("Index", "JumperController", FormMethod.Post, new { }))
-            {
-                Html.Hidden("pageIndex", 1);
-                <li id="FirstPage"><a>Primeira Página</a></li>
-            }
-            @using (Html.BeginForm("Index", "JumperController", FormMethod.Post, new { }))
-            {
-                Html.Hidden("pageIndex", 0);
-                <li id="LastPage"><a>Última Página</a></li>
-            }
-            @using (Html.BeginForm("Index", "JumperController", FormMethod.Post, new { }))
-            {
-                <input class="text-box single-line" data-val="true" id="EscolhaPagina" name="pageIndex" type="number">
-            }
-            
-            
-            
-            
-@*            <li id="FirstPage"><a>Primeira Página</a></li>
-			<li id="LastPage"><a>Última Página</a></li>
-            <input class="text-box single-line" data-val="true" id="EscolhaPagina" name="EscolhaPagina" type="number">*@
+            <li id="FirstPage" class="paginacao" data-value="1"><a>Primeira Página</a></li>
+            <li id="LastPage" class="paginacao" data-value="@Math.Ceiling(ViewBag.dados / ViewBag.count)"><a>Última Página</a></li>
+            <input class="text-box single-line paginacao" data-val="true" id="EscolhaPagina" name="pageIndex" type="number" max="@Math.Ceiling(ViewBag.dados / ViewBag.count)" min="1">
         </ul>
-			
 	</div>
 </div>
 
-
-
-
 <script type="text/javascript">
 
-    @*$('#@Model.Form').find('[name=@pageIndex]');
-    $('#@Model.Form').submit();*@
+    var paginas = Math.Ceiling(ViewBag.dados / ViewBag.count);
 
-    html.find('#FirstPage').click(function () {
-        
+
+    $('#@Model.Form').find('[name=pageIndex]');
+    $('#@Model.Form').submit();
+
+    $('#FirstPage').click(function () {
+        $.ajax({
+            type: "POST",
+            url: "~/JumperController/Index",
+            data: { pageIndex: EscolhaPagina },
+            success: function (data) {
+                alert("");
+                $("#partialView").html(data);
+            },
+            error: function () {
+                alert("");
+            }
+        });
     });
 
-    html.find('#LastPage').click(function () {
-
+    $('#LastPage').click(function () {
+        $.ajax({
+            type: "post",
+            url: "~/jumpercontroller/index",
+            data: { pageindex: escolhapagina },
+            success: function (data) {
+                alert("deu bom");
+                $("#partialview").html(data);
+                console.log("abcdefghijklmnopqrstuywyz");
+            },
+            error: function () {
+                alert("deu ruim");
+            }
+        });
     });
 
-    var EscolhaPagina = $('#EscolhaPagina').val();
-
-    $.ajax({
-        type: "POST",
-        url: "~/JumperController/Index",
-        data: { pageIndex: EscolhaPagina },
-        success: function (data) {
-            alert("meu pastel é mais barato, etchalele");
-            $("#partialView").html(data);
-        },
-        error: function () {
-            alert("deu ruim, culpa do guinter");
-        }
+    $('#EscolhaPagina').click(function () {
+        var EscolhaPagina = $('#EscolhaPagina').val();
+        $.ajax({
+            type: "POST",
+            url: "~/JumperController/Index",
+            data: { pageIndex: EscolhaPagina },
+            success: function (data) {
+                alert("deu bom");
+                $("#partialView").html(data);
+            },
+            error: function () {
+                alert("deu ruim");
+            }
+        });
     });
-    
 </script>
