@@ -1,6 +1,7 @@
 ﻿@{ViewBag.Title = "Página Inicial";}
 @section scripts
 {
+
     <script type="text/javascript">
 
             var modalConfirmacao = null;
@@ -43,13 +44,13 @@
                 });
                 modalAdicionar = $(html).modal();
             };
-
+        
     </script>
 }
 <div class="container-fluid">
     @using (Ajax.BeginForm(actionName: "Index", controllerName: "Jumper", routeValues: null, ajaxOptions: new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "resultSearch" }, htmlAttributes: new { id = "pesquisarForm" }))
     {
-        @Html.Hidden("pageIndex", 3)
+        @Html.Hidden("pageIndex", 1)
         <div id="top" class="row">
 	        <div class="col-md-3"></div>
             <div class="col-md-6">
@@ -68,13 +69,5 @@
         </div>
     }
     <div id="resultSearch">
-
     </div>
-    
-
-    @* 
-    
-
-
-    *@
 </div>

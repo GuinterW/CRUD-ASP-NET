@@ -20,7 +20,7 @@ namespace ProjetoCRUD.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(string search = "", int pageIndex = 0)
+        public ActionResult Index(string search = "", int pageIndex = 1)
         {
             Jumpers[] jumpers = null;
 
@@ -31,10 +31,11 @@ namespace ProjetoCRUD.Controllers
                 var ItensSkip = (pageIndex - 1) * 10;
                 
                 var count = query.Count();
-                var itens = query.OrderByDescending(x => x.IDJumpers).Skip(0).Take(10);
+                var itens = query.OrderByDescending(x => x.IDJumpers).Skip(ItensSkip).Take(10);
 
                 jumpers = itens.ToArray();
-                ViewBag.dados = jumpers;
+                var totalItens = db.Jumpers.Count();
+                ViewBag.dados = (decimal)totalItens;
                 ViewBag.Count = 10; 
             }
 

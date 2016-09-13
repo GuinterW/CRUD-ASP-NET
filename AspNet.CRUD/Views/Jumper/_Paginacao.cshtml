@@ -1,88 +1,86 @@
 ﻿@model AspNet.CRUD.ViewModel.PaginacaoViewModel
 
-@*@Model.Count
-@Model.PageIndex 
-@Model.Form*@
-
 @*
 Criar páginação:
-* Primeiro e ultima página
+* Paginação 10 itens por página
+* Primeira e ultima página
 * Campo númerico
-* Renderizar a quantidade de botões
-* O count será o total de botões
+* Submeter página atual
 * Dica: ViewBag
 * A paginação deverá atualizar o formulário através de javascript
-* Submeter página atual
-
-
 *@
 
-@*@{Html.RenderPartial("asfsafasf", new AspNet.CRUD.ViewModel.PaginacaoViewModel()){ Count = 12, Form = "teste", PageIndex = 0, PageIndexName = "pageIndex" });}*@
+@{
+  var Pages = Math.Ceiling(ViewBag.dados / ViewBag.Count);
+ }
 
-@*Paginação 10 itens por página*@
-<div id="partialView"></div>
 <div id="bottom" class="row">
 	<div class="col-md-12">
 		<ul class="pagination">
-            <li id="FirstPage" class="paginacao" data-value="1"><a>Primeira Página</a></li>
-            <li id="LastPage" class="paginacao" data-value="@Math.Ceiling(ViewBag.dados / ViewBag.count)"><a>Última Página</a></li>
-            <input class="text-box single-line paginacao" data-val="true" id="EscolhaPagina" name="pageIndex" type="number" max="@Math.Ceiling(ViewBag.dados / ViewBag.count)" min="1">
+            <li class="pagination" data-value="1"><button class="btn btn-secondary" id="FirstPage">Primeira Página</button></li>
+            <li class="pagination" data-value=@Math.Ceiling(ViewBag.dados / ViewBag.Count);><button class="btn btn-secondary" id="LastPage">Última Página</button></li>
+            <input class="text-box single-line pagination form-control-row" data-val="true" id="ChoisePage" name="pageIndex" type="number" max=@Pages min="1">
+            <button id="SearchPage" class="btn btn-secondary">Procurar</button>
         </ul>
 	</div>
 </div>
 
 <script type="text/javascript">
-
-    var paginas = Math.Ceiling(ViewBag.dados / ViewBag.count);
-
-
-    $('#@Model.Form').find('[name=pageIndex]');
-    $('#@Model.Form').submit();
+    $("#FirstPage,#LastPage,#SearchPage").unbind();
 
     $('#FirstPage').click(function () {
+        $("#FirstPage").unbind();
         $.ajax({
             type: "POST",
-            url: "~/JumperController/Index",
-            data: { pageIndex: EscolhaPagina },
+            url: "Jumper/Index",
+            data: { pageIndex: 1 },
             success: function (data) {
-                alert("");
-                $("#partialView").html(data);
+                $("#resultSearch").html(data);
+                $("#FirstPage").attr('disabled', 'disabled');
+                $("#FirstPage").css('cursor', 'not-allowed');
             },
             error: function () {
-                alert("");
             }
         });
     });
 
     $('#LastPage').click(function () {
+        $("#LastPage").unbind();
         $.ajax({
             type: "post",
-            url: "~/jumpercontroller/index",
-            data: { pageindex: escolhapagina },
+            url: "Jumper/Index",
+            data: { pageIndex: @Pages },
             success: function (data) {
-                alert("deu bom");
-                $("#partialview").html(data);
-                console.log("abcdefghijklmnopqrstuywyz");
+                $("#resultSearch").html(data);
+                $("#LastPage").attr('disabled', 'disabled');
+                $("#LastPage").css('cursor', 'not-allowed');
             },
             error: function () {
-                alert("deu ruim");
             }
         });
     });
 
-    $('#EscolhaPagina').click(function () {
-        var EscolhaPagina = $('#EscolhaPagina').val();
+    $('#SearchPage').click(function () {
+        $("#ChoisePage").unbind();
+        var EscolhaPagina = $('#ChoisePage').val();
         $.ajax({
             type: "POST",
-            url: "~/JumperController/Index",
+            url: "Jumper/Index",
             data: { pageIndex: EscolhaPagina },
             success: function (data) {
-                alert("deu bom");
-                $("#partialView").html(data);
+                $("#resultSearch").html(data);
+                if(EscolhaPagina == 1 || EscolhaPagina == ""){
+                    $("#FirstPage").attr('disabled', 'disabled');
+                    $("#FirstPage").css('cursor', 'not-allowed');
+                }
+                else if (EscolhaPagina == @Pages){
+                    $("#LastPage").attr('disabled', 'disabled');
+                    $("#LastPage").css('cursor', 'not-allowed');
+                }
             },
             error: function () {
-                alert("deu ruim");
             }
         });
     });
+
 </script>

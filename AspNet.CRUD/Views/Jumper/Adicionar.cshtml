@@ -1,16 +1,13 @@
 ﻿@model AspNet.CRUD.Models.Jumpers
-<div class="modal fade" data-id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+<div class="modal fade" data-id="create-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
-			</div>
+                <h2>Adicionar Jumpers</h2>
+            </div>
 			<div class="modal-body">
                 @using (Ajax.BeginForm(actionName: "Adicionar", controllerName: "Jumper", routeValues: null, ajaxOptions: new AjaxOptions() { HttpMethod = "POST", OnSuccess = "cadastrarItemOnSuccess" }, htmlAttributes: new { id = "cadastrarForm" }))
                 {
-                    <fieldset>
-                    <legend>Adicionar Jumpers</legend>
-
                     <div class="editor-label">
                     @Html.LabelFor(model => model.TypeJumpers)
                     </div>
@@ -22,11 +19,10 @@
                     <div class="editor-label">
                     @Html.LabelFor(model => model.QntdJumpers)
                     </div>
-                    <div class="editor-field">
+                    <div class="editor-field" min="1">
                     @Html.EditorFor(model => model.QntdJumpers)
                     @Html.ValidationMessageFor(model => model.QntdJumpers)
                     </div>
-                    </fieldset>
                 }
    			</div>
 			<div class="modal-footer">
