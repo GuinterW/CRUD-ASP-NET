@@ -34,7 +34,8 @@ namespace ProjetoCRUD.Controllers
                 var itens = query.OrderByDescending(x => x.IDJumpers).Skip(ItensSkip).Take(10);
 
                 jumpers = itens.ToArray();
-                var totalItens = db.Jumpers.Count();
+                var totalItens = query.Count();
+                ViewBag.SearchType = search;
                 ViewBag.dados = (decimal)totalItens;
                 ViewBag.Count = 10; 
             }

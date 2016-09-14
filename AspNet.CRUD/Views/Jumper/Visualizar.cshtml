@@ -9,18 +9,14 @@
             <legend>Dados do jumper</legend>
                 @Html.HiddenFor(model => model.IDJumpers)
             <div class="editor-label">
-                @Html.LabelFor(model => model.TypeJumpers)
+                <label>Tipo de Jumper</label>
             </div>
-          <!--  <div class="editor-field"> -->
-                @Html.TextBoxFor(model => model.TypeJumpers)
-                @Html.ValidationMessageFor(model => model.TypeJumpers)
-         <!--   </div> -->
+                <label>@Model.TypeJumpers</label>
             <div class="editor-label">
-                @Html.LabelFor(model => model.QntdJumpers)
+                <label>Quantidade</label>
             </div>
             <div class="editor-field">
-                @Html.EditorFor(model => model.QntdJumpers)
-                @Html.ValidationMessageFor(model => model.QntdJumpers)
+                <label>@Model.QntdJumpers</label>
             </div>
         </fieldset>
 	 		<hr />

@@ -12,7 +12,7 @@
         <legend>Dados do jumper</legend>
             @Html.HiddenFor(model => model.IDJumpers)
         <div class="editor-label">
-            @Html.LabelFor(model => model.TypeJumpers)
+            <label>Tipo de Jumper</label>
         </div>
         <div class="editor-field">
             @Html.EditorFor(model => model.TypeJumpers)
@@ -20,13 +20,14 @@
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.QntdJumpers)
+            <label>Quantidade de Jumpers</label>
         </div>
         <div class="editor-field">
             @Html.EditorFor(model => model.QntdJumpers)
             @Html.ValidationMessageFor(model => model.QntdJumpers)
         </div>
         <p>
+            @*<button type="submit" submit="Salvar"></button>*@
             <input type="submit" value="Salvar" />
         </p>
     </fieldset>

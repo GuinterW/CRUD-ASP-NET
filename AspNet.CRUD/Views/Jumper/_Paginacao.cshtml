@@ -17,56 +17,59 @@ Criar páginação:
 <div id="bottom" class="row">
 	<div class="col-md-12">
 		<ul class="pagination">
-            <li class="pagination" data-value="1"><button class="btn btn-secondary" id="FirstPage">Primeira Página</button></li>
-            <li class="pagination" data-value=@Math.Ceiling(ViewBag.dados / ViewBag.Count);><button class="btn btn-secondary" id="LastPage">Última Página</button></li>
-            <input class="text-box single-line pagination form-control-row" data-val="true" id="ChoisePage" name="pageIndex" type="number" max=@Pages min="1">
+            <li class="pagination" data-value="1"><button data-searchType="@ViewBag.SearchType" class="btn btn-secondary" id="FirstPage">Primeira Página</button></li>
+            <li class="pagination" data-value=@Math.Ceiling(ViewBag.dados / ViewBag.Count);><button data-searchType="@ViewBag.SearchType" class="btn btn-secondary" id="LastPage">Última Página</button></li>
+            <input data-searchType="@ViewBag.SearchType" class="text-box single-line pagination form-control-row" data-val="true" id="ChoosePage" name="pageIndex" type="number" max=@Pages min="1">
             <button id="SearchPage" class="btn btn-secondary">Procurar</button>
         </ul>
 	</div>
 </div>
 
 <script type="text/javascript">
-    $("#FirstPage,#LastPage,#SearchPage").unbind();
+    $('#FirstPage,#LastPage,#SearchPage').unbind();
+    if (@Pages == 1){
+        $("#FirstPage").attr('disabled', 'disabled');
+        $("#FirstPage").css('cursor', 'not-allowed');
+        $("#LastPage").attr('disabled', 'disabled');
+        $("#LastPage").css('cursor', 'not-allowed');
+    }
 
     $('#FirstPage').click(function () {
         $("#FirstPage").unbind();
+        var searchType = $("#FirstPage").data("searchtype");
         $.ajax({
             type: "POST",
             url: "Jumper/Index",
-            data: { pageIndex: 1 },
+            data: { pageIndex: 1, search:searchType },
             success: function (data) {
-                $("#resultSearch").html(data);
-                $("#FirstPage").attr('disabled', 'disabled');
-                $("#FirstPage").css('cursor', 'not-allowed');
-            },
-            error: function () {
+                    $("#resultSearch").html(data);
+                    $("#FirstPage").attr('disabled', 'disabled');
+                    $("#FirstPage").css('cursor', 'not-allowed');
             }
         });
     });
-
     $('#LastPage').click(function () {
         $("#LastPage").unbind();
+        var searchType = $("#LastPage").data("searchtype");
         $.ajax({
             type: "post",
             url: "Jumper/Index",
-            data: { pageIndex: @Pages },
+            data: { pageIndex: @Pages, search:searchType },
             success: function (data) {
                 $("#resultSearch").html(data);
                 $("#LastPage").attr('disabled', 'disabled');
                 $("#LastPage").css('cursor', 'not-allowed');
-            },
-            error: function () {
             }
         });
     });
-
     $('#SearchPage').click(function () {
-        $("#ChoisePage").unbind();
-        var EscolhaPagina = $('#ChoisePage').val();
+        $("#ChoosePage").unbind();
+        var searchType = $("#ChoosePage").data("searchtype");
+        var EscolhaPagina = $('#ChoosePage').val();
         $.ajax({
             type: "POST",
             url: "Jumper/Index",
-            data: { pageIndex: EscolhaPagina },
+            data: { pageIndex: EscolhaPagina, search:searchType },
             success: function (data) {
                 $("#resultSearch").html(data);
                 if(EscolhaPagina == 1 || EscolhaPagina == ""){
@@ -77,10 +80,7 @@ Criar páginação:
                     $("#LastPage").attr('disabled', 'disabled');
                     $("#LastPage").css('cursor', 'not-allowed');
                 }
-            },
-            error: function () {
             }
         });
     });
-
 </script>

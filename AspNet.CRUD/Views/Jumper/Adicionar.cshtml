@@ -9,7 +9,7 @@
                 @using (Ajax.BeginForm(actionName: "Adicionar", controllerName: "Jumper", routeValues: null, ajaxOptions: new AjaxOptions() { HttpMethod = "POST", OnSuccess = "cadastrarItemOnSuccess" }, htmlAttributes: new { id = "cadastrarForm" }))
                 {
                     <div class="editor-label">
-                    @Html.LabelFor(model => model.TypeJumpers)
+                    <label>Tipo de Jumper</label>
                     </div>
                     <div class="editor-field">
                     @Html.EditorFor(model => model.TypeJumpers)
@@ -17,7 +17,7 @@
                     </div>
 
                     <div class="editor-label">
-                    @Html.LabelFor(model => model.QntdJumpers)
+                    <label>Quantidade de Jumpers</label>
                     </div>
                     <div class="editor-field" min="1">
                     @Html.EditorFor(model => model.QntdJumpers)
